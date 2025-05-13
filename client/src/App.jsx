@@ -3,7 +3,9 @@ import { useAuth } from "./contexts/authentication";
 import AuthenticatedApp from "./pages/AuthenticatedApp.jsx";
 import axios from "axios";
 import UnauthenticatedApp from "./pages/UnauthenticatedApp";
-axios.defaults.baseURL = "http://localhost:4000/";
+
+// Use environment variable for API URL
+axios.defaults.baseURL = "https://mj-project.onrender.com/";
 
 function App() {
   const auth = useAuth();

@@ -17,9 +17,7 @@ function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://petsitter-sever.onrender.com"
-        );
+        const response = await axios.get("/");
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
