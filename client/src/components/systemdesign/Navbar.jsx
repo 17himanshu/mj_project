@@ -20,6 +20,7 @@ function Navbar() {
   } = useAuth();
   const { profileImage, getProfileImage } = usePosts();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [profileImageLoaded, setProfileImageLoaded] = useState(false); // Add this state
 
@@ -110,28 +111,32 @@ function Navbar() {
     // console.log(profileImage);
     if (isAuthenticated) {
       return (
-        <div className="dropdown dropdown-end ">
-          <label tabIndex={0}>
-            <img
-              src={profileImage ? profileImage : frame2}
-              alt=""
-              className="w-12 h-12 rounded-full cursor-pointer object-cover hover:shadow-lg"
-            />
-          </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[10] menu pt-2 shadow bg-etc-white rounded-box w-[186px] text-etc-black text-body2"
-          >
-            {menuItems.map((item, idx) => (
-              <ListItem
-                key={idx}
-                id={idx}
-                icon={item.icon}
-                content={item.content}
-                navigate={item.navigate}
-              />
-            ))}
-          </ul>
+        <div className="relative">
+          <img
+            src={profileImage ? profileImage : frame2}
+            alt=""
+            className="w-12 h-12 rounded-full cursor-pointer object-cover hover:shadow-lg"
+            onClick={() => setOpen((prev) => !prev)}
+          />
+          {open && (
+            <ul
+              className="absolute right-0 z-[10] menu pt-2 shadow bg-etc-white rounded-box w-[186px] text-etc-black text-body2"
+              onMouseLeave={() => setOpen(false)}
+            >
+              {menuItems.map((item, idx) => (
+                <ListItem
+                  key={idx}
+                  id={idx}
+                  icon={item.icon}
+                  content={item.content}
+                  navigate={() => {
+                    setOpen(false);
+                    item.navigate();
+                  }}
+                />
+              ))}
+            </ul>
+          )}
         </div>
       );
     }
